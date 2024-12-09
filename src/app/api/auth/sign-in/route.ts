@@ -7,23 +7,25 @@ export async function POST(req: Request) {
   // Obtém os dados enviados pela requisição
   const { email, password } = await req.json();
 
-  // Encontra o usuário no banco de dados
+  // Encontra o utilizador no banco de dados
   const user = await prisma.user.findUnique({
     where: { email },
   });
 
+  // se nao existir o utilizador
   if (!user) {
     return new Response(
-      JSON.stringify({ message: "Invalid email or password" }),
+      JSON.stringify({ message: "Email ou palavra-passe errada" }),
       { status: 400 }
     );
   }
 
-  // Verifica se a senha é correta
+  // Verifica se a senha é igual á senha criptografada
   const isPasswordValid = await compare(password, user.password);
+
   if (!isPasswordValid) {
     return new Response(
-      JSON.stringify({ message: "Invalid email or password" }),
+      JSON.stringify({ message: "Email ou palavra-passe errada" }),
       { status: 400 }
     );
   }

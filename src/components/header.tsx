@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
-import { ModeToggle } from "./toggle-darkMode";
 import { LogIn } from "lucide-react";
 import { DropdownMenuUser } from "./user-dropdown";
 import { useEffect, useState } from "react";
@@ -39,12 +38,11 @@ export default function Header({ user }: HeaderProps) {
             }`}
           >
             <Button variant={"outline"}>
-              {pathname === "/auth/sign-in" ? "Register" : "Login"}{" "}
+              {pathname === "/auth/sign-in" ? "Registar" : "Iniciar sessão"}{" "}
               <LogIn size={4} />
             </Button>
           </Link>
         )}
-        <ModeToggle />
       </div>
     </div>
   );

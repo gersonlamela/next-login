@@ -38,7 +38,7 @@ export function DropdownMenuUser({ user }: DropdownMenuUserProps) {
         </DropdownMenuLabel>
         <DropdownMenuItem onClick={handleRevokeToken}>
           <LogOut />
-          <span>Log out</span>
+          <span>Sair</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

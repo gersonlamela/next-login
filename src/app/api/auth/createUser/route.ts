@@ -17,14 +17,15 @@ export async function POST(req: Request) {
   }
 
   try {
-    // Validate request body with Zod
     const body = await req.json();
 
+
+    //dados que vem do formulario
     const { name, email, password } = userSchema.parse(body);
 
-    console.log('body', body);
 
-    // Check if user already exists
+
+    // verifica se o utilizador existe
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
@@ -33,10 +34,10 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'Email already in use' }, { status: 400 });
     }
 
-    // Hash the password
+    // Encriptar a password
     const hashedPassword = hashSync(password, 10);
 
-    // Create the user
+    // cria o utilizador
     const user = await prisma.user.create({
       data: {
         name,
@@ -45,14 +46,14 @@ export async function POST(req: Request) {
       },
     });
 
-    // Generate JWT token
+    // Gera o token
     const token = jwt.sign(
       { userId: user.id, email: user.email },
       process.env.JWT_SECRET || 'default_secret', // Replace with a strong secret in .env
       { expiresIn: '1h' }
     );
 
-    // Set token in cookies
+    // Insere o token na cookie
     const cookie = cookies(); // Access the cookies
     (await cookie).set('token', token, {
       httpOnly: true,
