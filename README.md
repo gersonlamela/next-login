@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔒 Next Login with JWT and Bcrypt Password
 
-## Getting Started
+Welcome to **Next Login with JWT and Bcrypt Password**, a secure and scalable authentication system built with modern technologies. This project uses **React**, **Next.js**, **TailwindCSS**, **Prisma**, **JWT**, and **Bcrypt** for secure password handling.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📚 Table of Contents
+
+- [🔒 Next Login with JWT and Bcrypt Password](#-next-login-with-jwt-and-bcrypt-password)
+  - [📚 Table of Contents](#-table-of-contents)
+  - [⚙️ Technologies](#️-technologies)
+  - [🚀 Getting Started](#-getting-started)
+  - [⚡ Environment Variables](#-environment-variables)
+  - [🛠️ Project Structure](#️-project-structure)
+  - [📜 License](#-license)
+
+---
+
+## ⚙️ Technologies
+
+This project is built using the following technologies:
+
+- 🌐 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB) - A JavaScript library for building user interfaces.
+- ⚡ ![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white) - A React framework for server-rendered web applications.
+- 🎨 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) - A utility-first CSS framework for rapid UI development.
+- 🛠️ ![Prisma](https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white) - An ORM for database manipulation.
+- 🔒 ![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white) - Secure JSON Web Token-based authentication.
+- 🔑 ![Bcrypt](https://img.shields.io/badge/Bcrypt-228B22?style=for-the-badge&logo=security&logoColor=white) - For hashing and securely storing passwords.
+
+---
+
+## 🚀 Getting Started
+
+To set up and run the project locally:
+
+1. Clone the repository to your local machine.
+2. Install the necessary dependencies `npm i`.
+3. Set up the environment variables (see [Environment Variables](#-environment-variables)).
+4. Run database migrations `npx prisma migrate dev`.
+5. Start the development server.
+6. Open your browser and navigate to `http://localhost:3000`.
+
+---
+
+## ⚡ Environment Variables
+
+The project requires the following environment variables to function properly. Create a `.env` file in the root of the project and add:
+
+DATABASE_URL=your-database-url  
+JWT_SECRET=your-jwt-secret
+
+```env
+- **`DATABASE_URL`**: Connection string for your database.
+- **`JWT_SECRET`**: Secret key for JWT authentication.
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```plaintext
+├── /pages       # Next.js pages
+├── /components  # Reusable UI components
+├── /styles      # Global and TailwindCSS styles
+├── /prisma      # Prisma schema and migrations
+├── /utils       # Utility functions
+├── /api         # API routes for authentication
+└── /middleware  # Middleware for JWT validation
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📜 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This project is licensed under the [MIT License](LICENSE).  
+Feel free to use and modify it as per your needs!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🎉 **Happy Coding!** 🚀
