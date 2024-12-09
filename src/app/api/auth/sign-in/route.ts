@@ -4,52 +4,60 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
-  // Obtém os dados enviados pela requisição
-  const { email, password } = await req.json();
-
-  // Encontra o utilizador no banco de dados
-  const user = await prisma.user.findUnique({
-    where: { email },
-  });
-
-  // se nao existir o utilizador
-  if (!user) {
-    return new Response(
-      JSON.stringify({ message: "Email ou palavra-passe errada" }),
-      { status: 400 }
+  try {
+    // Obtém os dados enviados pela requisição
+    const { email, password } = await req.json();
+  
+    // Encontra o utilizador no banco de dados
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+  
+    // Se não existir o utilizador
+    if (!user) {
+      return new Response(
+        JSON.stringify({ message: "Email ou palavra-passe errada" }),
+        { status: 400 }
+      );
+    }
+  
+    // Verifica se a senha é igual à senha criptografada
+    const isPasswordValid = await compare(password, user.password);
+  
+    if (!isPasswordValid) {
+      return new Response(
+        JSON.stringify({ message: "Email ou palavra-passe errada" }),
+        { status: 400 }
+      );
+    }
+  
+    // Gera o token JWT
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.JWT_SECRET || "default_secret", // Usar uma chave secreta forte
+      { expiresIn: "1h" }
     );
-  }
-
-  // Verifica se a senha é igual á senha criptografada
-  const isPasswordValid = await compare(password, user.password);
-
-  if (!isPasswordValid) {
-    return new Response(
-      JSON.stringify({ message: "Email ou palavra-passe errada" }),
-      { status: 400 }
-    );
-  }
-
-  // Gera o token JWT
-  const token = jwt.sign(
-    { userId: user.id, email: user.email },
-    process.env.JWT_SECRET || "default_secret", // Usar uma chave secreta forte
-    { expiresIn: "1h" }
-  );
-
-  // Define o cookie com o token, com as configurações de segurança
-  const cookie = cookies(); // Access the cookies
-    (await cookie).set('token', token, {
+  
+    // Define o cookie com o token, com as configurações de segurança
+    const cookie = cookies();
+    await (await cookie).set('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 60 * 60, // 1 hour
+      maxAge: 60 * 60, // 1 hora
       path: '/',
     });
-
-  // Retorna uma resposta de sucesso com o token (caso queira retornar o token no corpo da resposta)
-  return new Response(
-    JSON.stringify({ message: "Login successful" }),
-    { status: 200 }
-  );
+  
+    // Retorna uma resposta de sucesso
+    return new Response(
+      JSON.stringify({ message: "Login successful" }),
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Erro no servidor:", error);
+    return new Response(
+      JSON.stringify({ message: "Erro interno do servidor" }),
+      { status: 500 }
+    );
+  }
 }
