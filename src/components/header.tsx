@@ -8,7 +8,7 @@ import { DropdownMenuUser } from "./user-dropdown";
 import { useEffect, useState } from "react";
 
 export interface User {
-  id: number;
+  id: string;
   email: string;
   name: string;
 }

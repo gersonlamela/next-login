@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
+import { prisma } from './lib/prisma';
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const token = req.cookies.get('token')?.value;
 
   if (!token) {
@@ -10,12 +11,27 @@ export function middleware(req: NextRequest) {
 
   try {
     // Verifica o JWT
-    jwt.verify(token, process.env.JWT_SECRET || 'default_secret');
-    return NextResponse.next(); // Permite continuar para a rota
+    const decoded: any = jwt.verify(token, process.env.JWT_SECRET || 'default_secret');
+    
+    // Obtém o userId do token (no caso, `sub` pode ser o userId)
+    const userIdFromToken = decoded.sub;
+
+    // Verifique se o userId existe no banco de dados
+    const user = await prisma.user.findUnique({
+      where: { id: userIdFromToken },
+    });
+
+    if (!user) {
+      // Se o usuário não for encontrado, redireciona para o login
+      return NextResponse.redirect(new URL('/login', req.url));
+    }
+
   } catch (error) {
     console.error('Invalid token:', error);
-    return NextResponse.redirect(new URL('/login', req.url)); // Redireciona para login se o token for inválido
+    return NextResponse.redirect(new URL('/login', req.url));
   }
+
+  return NextResponse.next(); // Permite que a requisição continue
 }
 
 export const config = {

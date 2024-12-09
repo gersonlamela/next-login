@@ -10,7 +10,7 @@ import {
 import { deleteToken } from "@/app/delete-token";
 
 export interface User {
-  id: number;
+  id: string;
   email: string;
   name: string;
 }

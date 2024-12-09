@@ -34,8 +34,8 @@ export async function POST(req: Request) {
     // Gera o token JWT
     const token = jwt.sign(
       { userId: user.id, email: user.email },
-      process.env.JWT_SECRET || "default_secret", // Usar uma chave secreta forte
-      { expiresIn: "1h" }
+      process.env.JWT_SECRET || 'default_secret', // Chave secreta
+      { expiresIn: '1h', algorithm: 'HS256' }
     );
   
     // Define o cookie com o token, com as configurações de segurança

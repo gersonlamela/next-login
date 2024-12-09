@@ -18,7 +18,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Eye, EyeClosed } from "lucide-react";
 import Link from "next/link";
-import axios from "axios";
+import { toast } from "sonner";
 
 const SignInSchema = z
   .object({
@@ -58,17 +58,30 @@ export default function SignUp() {
   async function onSubmit(data: z.infer<typeof SignInSchema>) {
     try {
       // Chamada à API
-      const response = await axios.post("/api/auth/createUser", {
-        name: data.name,
-        email: data.email,
-        password: data.password,
+      const response = await fetch("/api/auth/createUser", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          password: data.password,
+        }),
       });
 
       if (response.status === 201) {
         window.location.href = "/";
+      } else {
+        const errorData = await response.json();
+        if (errorData?.message) {
+          toast.error(errorData.message); // Mostra mensagem específica da API
+        } else {
+          toast.error("Erro ao tentar autenticar. Verifique suas credenciais.");
+        }
       }
     } catch (error: unknown) {
-      console.error("Erro ao registar utilizador:", error);
+      console.log("Erro ao registar utilizador:", error);
     }
   }
   return (

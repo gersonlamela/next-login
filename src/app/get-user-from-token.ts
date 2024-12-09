@@ -12,8 +12,8 @@ export async function getUserFromToken() {
   }
 
   try {
-    // Decodifica o token sem verificar sua validade
-    const decoded: any = jwt.decode(token); // Fornecendo tipo `any` para o decodificado
+    // Verifica o token e decodifica com a validação da chave secreta
+    const decoded: any = jwt.verify(token, process.env.JWT_SECRET || 'default_secret');
 
     if (!decoded || !decoded.userId) {
       console.log('Invalid token');
@@ -22,14 +22,15 @@ export async function getUserFromToken() {
 
     // Agora que temos o userId, podemos buscar o usuário no banco de dados (Prisma)
     const user = await prisma.user.findUnique({
-      where: { id: decoded.userId }, // Busca pelo ID do usuário decodificado
-      select:{
-        id:true,
-        name:true,
-        email:true,
-        password:false
-
-      }
+      where: {
+        id: decoded.userId.toString(), // Converte para string se necessário
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: false,
+      },
     });
 
     if (!user) {
