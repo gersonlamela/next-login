@@ -57,7 +57,6 @@ export default function SignUp() {
 
   async function onSubmit(data: z.infer<typeof SignInSchema>) {
     try {
-      // Chamada à API
       const response = await fetch("/api/auth/createUser", {
         method: "POST",
         headers: {
@@ -75,7 +74,7 @@ export default function SignUp() {
       } else {
         const errorData = await response.json();
         if (errorData?.message) {
-          toast.error(errorData.message); // Mostra mensagem específica da API
+          toast.error(errorData.message);
         } else {
           toast.error("Erro ao tentar autenticar. Verifique suas credenciais.");
         }

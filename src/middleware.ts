@@ -1,6 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
+import  { type NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { prisma } from './lib/prisma';
+
+interface DecodedToken  {
+  sub?: string;
+}
 
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get('token')?.value;
@@ -10,30 +14,26 @@ export async function middleware(req: NextRequest) {
   }
 
   try {
-    // Verifica o JWT
-    const decoded: any = jwt.verify(token, process.env.JWT_SECRET || 'default_secret');
-    
-    // Obtém o userId do token (no caso, `sub` pode ser o userId)
-    const userIdFromToken = decoded.sub;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'default_secret') as DecodedToken;
 
-    // Verifique se o userId existe no banco de dados
-    const user = await prisma.user.findUnique({
-      where: { id: userIdFromToken },
-    });
-
-    if (!user) {
-      // Se o usuário não for encontrado, redireciona para o login
+    if (!decoded?.sub) {
       return NextResponse.redirect(new URL('/login', req.url));
     }
 
-  } catch (error) {
-    console.error('Invalid token:', error);
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.sub },
+    });
+
+    if (!user) {
+      return NextResponse.redirect(new URL('/login', req.url));
+    }
+  } catch {
     return NextResponse.redirect(new URL('/login', req.url));
   }
 
-  return NextResponse.next(); // Permite que a requisição continue
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/api/protected/:path*'], // Rotas protegidas
+  matcher: ['/dashboard/:path*', '/api/protected/:path*'],
 };

@@ -16,14 +16,13 @@ export interface User {
 }
 
 interface DropdownMenuUserProps {
-  user: User | null; // Permite que user seja null
+  user: User | null;
 }
 
 export function DropdownMenuUser({ user }: DropdownMenuUserProps) {
   async function handleRevokeToken() {
     await deleteToken();
-    // Após revogar o token, você pode redirecionar o usuário ou realizar outras ações
-    window.location.href = "/"; // Redireciona para a página inicial (ajuste conforme necessário)
+    window.location.href = "/";
   }
 
   return (

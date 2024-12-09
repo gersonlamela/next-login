@@ -40,7 +40,6 @@ export default function SignIn() {
     const { email, password } = data;
 
     try {
-      // Enviar as credenciais para a API de login
       const response = await fetch("/api/auth/sign-in", {
         method: "POST",
         headers: {
@@ -54,7 +53,7 @@ export default function SignIn() {
       } else {
         const errorData = await response.json();
         if (errorData?.message) {
-          toast.error(errorData.message); // Mostra mensagem específica da API
+          toast.error(errorData.message);
         } else {
           toast.error("Erro ao tentar autenticar. Verifique suas credenciais.");
         }

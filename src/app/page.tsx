@@ -2,7 +2,7 @@ import type { User } from "@/components/header";
 import { getUserFromToken } from "./get-user-from-token";
 
 export default async function Home() {
-  const user: User | null = await getUserFromToken(); // Agora o utilizador pode ser null
+  const user: User | null = await getUserFromToken();
 
   return (
     <div className="flex flex-col h-full items-center justify-center p-4">

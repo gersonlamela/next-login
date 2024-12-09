@@ -27,7 +27,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user: User | null = await getUserFromToken(); // Agora user pode ser null
+  const user: User | null = await getUserFromToken();
 
   return (
     <html lang="en" suppressHydrationWarning>
