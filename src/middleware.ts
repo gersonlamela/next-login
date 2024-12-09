@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
 
   try {
     // Verifica o JWT
-    const decoded: any = jwt.verify(token, process.env.JWT_SECRET || 'default_secret');
+    const decoded: string = jwt.verify(token, process.env.JWT_SECRET || 'default_secret');
     
     // Obtém o userId do token (no caso, `sub` pode ser o userId)
     const userIdFromToken = decoded.sub;
