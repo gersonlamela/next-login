@@ -59,12 +59,12 @@ JWT_SECRET=your-jwt-secret
 ## 🛠️ Project Structure
 
 ```plaintext
-├── /pages       # Next.js pages
+├── /app       # Next.js pages
 ├── /components  # Reusable UI components
 ├── /styles      # Global and TailwindCSS styles
 ├── /prisma      # Prisma schema and migrations
-├── /utils       # Utility functions
-├── /api         # API routes for authentication
+├── /lib       # Utility functions
+├── /app/api         # API routes for authentication
 └── /middleware  # Middleware for JWT validation
 ```
 
