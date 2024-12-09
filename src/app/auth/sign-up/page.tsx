@@ -137,6 +137,7 @@ export default function SignUp() {
                         />
                         <Button
                           variant="ghost"
+                          type="button"
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-16 top-1/2 transform -translate-y-1/2 cursor-pointer"
                         >
@@ -174,6 +175,7 @@ export default function SignUp() {
                         />
                         <Button
                           variant="ghost"
+                          type="button"
                           onClick={() =>
                             setShowConfirmPassword(!showConfirmPassword)
                           }

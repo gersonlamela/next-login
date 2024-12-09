@@ -114,6 +114,7 @@ export default function SignIn() {
                         />
                         <Button
                           variant="ghost"
+                          type="button"
                           onClick={() => setShowPassword(!showPassword)}
                           className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer"
                         >
