@@ -9,7 +9,7 @@ export default async function Home() {
       {user ? (
         <div className="bg-green-100 p-6 rounded-lg shadow-md w-full max-w-md">
           <h1 className="text-3xl font-semibold text-green-700 mb-4">
-            Bem-vindo de volta, {user.name}!
+            Bem-vindo, {user.name}!
           </h1>
           <p className="text-lg text-gray-600">
             Estamos felizes por tê-lo de volta. Aqui estão os seus dados:
