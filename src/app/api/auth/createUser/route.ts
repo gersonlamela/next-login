@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { hashSync } from "bcrypt-ts";
-import jwt from 'jsonwebtoken';
+
 import { prisma } from '@/lib/prisma';
-import { cookies } from 'next/headers';
+
 import { NextResponse } from 'next/server';
 
 const userSchema = z.object({
