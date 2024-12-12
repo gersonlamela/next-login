@@ -46,25 +46,9 @@ export async function POST(req: Request) {
       },
     });
 
-    // Gera o token
-    const token = jwt.sign(
-      { userId: user.id, email: user.email },
-      process.env.JWT_SECRET || 'default_secret', // Replace with a strong secret in .env
-      { expiresIn: '1h' }
-    );
-
-    // Insere o token na cookie
-    const cookie = cookies(); // Access the cookies
-    (await cookie).set('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-      sameSite: 'strict',
-      maxAge: 60 * 60, // 1 hour
-      path: '/',
-    });
-
+   
     // Return success response
-    return NextResponse.json({ message: 'User created successfully', token }, { status: 201 });
+    return NextResponse.json({ message: 'User created successfully' }, { status: 201 });
     
   } catch (error) {
     if (error instanceof z.ZodError) {
