@@ -70,7 +70,7 @@ export default function SignUp() {
       });
 
       if (response.status === 201) {
-        window.location.href = "/";
+        window.location.href = "/sign-in";
       } else {
         const errorData = await response.json();
         if (errorData?.message) {
