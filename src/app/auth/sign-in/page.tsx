@@ -22,7 +22,7 @@ import Link from "next/link";
 
 const SignInSchema = z.object({
   email: z.string().email("Email inválido").min(1, "O email é obrigatório"),
-  password: z.string().min(6, "A palavra-passe é obrigatória"),
+  password: z.string(),
 });
 
 export default function SignIn() {
