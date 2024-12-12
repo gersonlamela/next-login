@@ -11,9 +11,6 @@ export default async function Home() {
           <h1 className="text-3xl font-semibold text-green-700 mb-4">
             Bem-vindo, {user.name}!
           </h1>
-          <p className="text-lg text-gray-600">
-            Estamos felizes por tê-lo de volta. Aqui estão os seus dados:
-          </p>
           <div className="mt-4 text-gray-700">
             <p>
               <strong>Email:</strong> {user.email}
