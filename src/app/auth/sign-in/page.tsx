@@ -110,6 +110,7 @@ export default function SignIn() {
                           type={showPassword ? "text" : "password"}
                           className="border border-gray-200 w-[280px] rounded"
                           placeholder="Palavra-passe"
+                          required
                         />
                         <Button
                           variant="ghost"
