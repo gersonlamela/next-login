@@ -22,7 +22,7 @@ import Link from "next/link";
 
 const SignInSchema = z.object({
   email: z.string().email("Email inválido").min(1, "O email é obrigatório"),
-  password: z.string(),
+  password: z.string().min(1, "A password é obrigatória"),
 });
 
 export default function SignIn() {
@@ -110,7 +110,6 @@ export default function SignIn() {
                           type={showPassword ? "text" : "password"}
                           className="border border-gray-200 w-[280px] rounded"
                           placeholder="Palavra-passe"
-                          required
                         />
                         <Button
                           variant="ghost"
